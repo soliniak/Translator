@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.App {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.input-output__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.input,
+.output {
+  width: 300px;
+  height: 400px;
+  float: left;
+  border: 1px solid rgb(185, 185, 185);
+  text-align: left;
+  padding: 1rem;
+  margin: 0 1rem;
+  font-family: Arial;
+  font-size: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 1px 4px 0px #00000021;
+  transition: all 0.2s ease;
+  margin: 2rem 0;
+}
+.btn:hover {
+  box-shadow: 0 1px 4px 0px #66666663;
+}
+
+.border-btn {
+  border: 1px solid rgb(185, 185, 185);
+  color: #000;
+  background-color: white;
+}
+
+.regexInput {
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.regexOutput {
+  border: 1px solid red;
+  height: 200px;
+  width: 400px;
+}

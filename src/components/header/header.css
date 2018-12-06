@@ -1,0 +1,11 @@
+.title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 2rem;
+  height: 94px;
+  width: 100%;
+  background-color: #43a047;
+  color: #fff;
+  margin-bottom: 2rem;
+}
