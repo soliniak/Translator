@@ -20,9 +20,10 @@ let request, requestUrl;
 
 
 let validateRegex = regex => {
-  console.log(regex)
-
-  if (regex === "") return false
+  if (regex.trim() === "") {
+    console.log("No regex")
+    return false;
+  }
   try {
     new RegExp(regex);
   } catch (e) {
@@ -31,27 +32,27 @@ let validateRegex = regex => {
   return true;
 }
 
-let matchRegex = (regex, textInput) => {
+let matchRegex = (textInput, regex) => {
   const regexFromInput = new RegExp(regex, "g");
   const found = textInput.match(regexFromInput);
   if (found !== "") {
-    console.log(found)
-    return found
+console.log(found.index)
+    return found;
   }
+  return false;
 }
 
-let validateToTranslate = toTranslate => {
+let validateTextToTranslate = toTranslate => {
   if (toTranslate.trim() !== "") {
     return toTranslate;
   }
 }
 
-let returnRegexOrText = (toTranslate, toRegex) => {
-
-  if (validateRegex(toRegex)) {
-    return matchRegex(toRegex, toTranslate)
+let returnRegexOrText = (toTranslate, regexValue) => {
+  if (validateRegex(regexValue)) {
+    return matchRegex(toTranslate, regexValue)
   } else {
-    return validateToTranslate(toTranslate);
+    return validateTextToTranslate(toTranslate);
   }
 }
 
@@ -73,27 +74,24 @@ class Translate extends Component {
   // }
 
 
-  validateData = () => {
-    const { toTranslate, toRegex } = this.props;
-
+  validateData = (toTranslate, regexValue) => {
     if (api_key && translateLangDirection && toTranslate.trim() !== "") {
-      return returnRegexOrText(toTranslate, toRegex)
+      return returnRegexOrText(toTranslate, regexValue)
     }
     return console.error("Invalid data. Check your API_KEY, translate direction for supported languages or text to translate (cannot be empty).");
   };
 
 
-  makeRequestURL = () => {
-
-
+  makeRequestURL = (toTranslate, regexValue) => {
     this.setState({
       loaderDisplay: true
     });
-    return (requestUrl = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${api_key}&text=${this.validateData()}&lang=${translateLangDirection}`);
+    let validateData = this.validateData(toTranslate, regexValue);
+    return (requestUrl = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${api_key}&text=${validateData}&lang=${translateLangDirection}`);
   };
 
-  makeRequest = () => {
-    this.makeRequestURL();
+  makeRequest = (toTranslate, regexValue, mixWithText) => {
+    requestUrl = this.makeRequestURL(toTranslate, regexValue);
     return (request = new Request(requestUrl, {
       Accept: "*/*",
       method: "POST",
@@ -104,8 +102,10 @@ class Translate extends Component {
     }));
   };
 
-  translate = () => {
-    this.makeRequest();
+  translate = (toTranslate, regexValue, mixWithText) => {
+
+    // this.fetchData(toTranslate, regexValue);
+    request = this.makeRequest(toTranslate, regexValue);
     fetch(request)
       .then(response => {
         if (response.status === 200) {
@@ -119,23 +119,36 @@ class Translate extends Component {
         }
       })
       .then(response => {
-        this.setState({
-          translate: response.text,
-          loaderDisplay: false
-        });
+        if(mixWithText){
+          console.log(mixWithText, toTranslate, regexValue)
+          const regexFromInput = new RegExp(regexValue, "gi");
+          this.setState({
+            translate: toTranslate.replace(regexFromInput, (a, b)=>{
+              console.log(a)
+              return response.text[b]
+            }),
+            loaderDisplay: false
+          });          
+        } else {
+          this.setState({
+            translate: response.text,
+            loaderDisplay: false
+          });
+        }
       })
       .catch(error => console.error("Error:", error));
   };
 
   componentDidUpdate(props) {
-    const { toTranslate, toRegex } = this.props;
-    console.log(toTranslate, props.toTranslate, " oraz ", toRegex, props.toRegex);
-    if (toTranslate !== props.toTranslate || toRegex !== props.toRegex) {
-      this.translate();
+    const { toTranslate, regexValue, mixWithText } = this.props;
+
+    // console.log(toTranslate, props.toTranslate, " oraz ", regexValue, props.regexValue);
+
+    if (toTranslate !== props.toTranslate || regexValue !== props.regexValue || mixWithText !== props.mixWithText) {
+      console.log("Zmienił się tekst, regex lub checbox")
+      this.translate(toTranslate, regexValue, mixWithText);
+      return;
     }
-    // if (this.props.toRegex !== props.toRegex) {
-    //   console.log("Hurra")
-    // }
   }
 
   render() {
@@ -150,19 +163,14 @@ class Translate extends Component {
 }
 
 export const TranslateRegex = (regex, textInput) => {
-  if (regex !== "") {
-
+  if (regex) {
     if (validateRegex(regex)) {
-
-      return matchRegex(regex, textInput);
-
+      return matchRegex(textInput, regex, false);
     } else {
-      return "Invalid regex."
+      return "Invalid regex.";
     }
-
-  } else {
-    return null
-  }
+  } 
+    return null;
 }
 
 export default Translate;
