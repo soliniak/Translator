@@ -5,7 +5,7 @@ class Header extends Component {
 	render() {
 		return (
 			<header className="header">
-				<h1 className="title-bar"> Regex translator </h1>
+				<h1 className="title-bar"> Translator </h1>
 			</header>
 		);
 	}

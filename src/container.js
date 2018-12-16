@@ -1,107 +1,86 @@
 import React, { Component } from "react";
-import Translate, { TranslateRegex } from "./components/translate/translate";
+import Translate from "./components/translate/translate";
 import Header from "./components/header/header"
+import styled from 'styled-components'
+import FontAwesome from 'react-fontawesome';
+
+
+const MainContainer = styled.div`
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+`;
+
+
 
 class Container extends Component {
   constructor() {
     super();
     this.state = {
       text: "",
-      regexValue: "",
-      regexValueFinal: "",
-      regexText: "",
-      regexCheckbox: false,
-      regexCheckboxInit: true // true = disabled
+      textSize: ""
     };
     this.input = React.createRef();
-    this.regexOutput = React.createRef();
-    this.regexValue = React.createRef();
 
   }
-
+  
   handleInput = () => {
-    if (this.state.text !== this.input.current.innerText || this.state.regexValue !== this.regexValue.current.value) {
+    if (this.state.text !== this.input.current.value) {
       this.setState({
-        text: this.input.current.innerText,
-        regexValueFinal: this.regexValue.current.value
+        text: this.input.current.value
       });
-    }
-  };
 
-  handleRegexValueChange = () => {
-    this.setState({
-      regexValue: TranslateRegex(this.regexValue.current.value, this.input.current.innerText),
-    })
-    if(!this.regexValue.current.value) {
+    }
+    if(this.input.current.value.length > 28){
       this.setState({
-        regexCheckboxInit: true
+        textSize: "1.5rem"
       })
     } else {
       this.setState({
-        regexCheckboxInit: false
-      })    
+        textSize: "2rem"
+      }) 
     }
-  }
-  handleRegexCheckbox = () => {
-    this.setState(prevState => ({
-      regexCheckbox: !prevState.regexCheckbox
-    }))
-  }
+  };
 
-
-  
   render() {
-    const { regexValue, regexValueFinal, text, regexCheckbox, regexCheckboxInit } = this.state;
+    const { text, textSize } = this.state;
 
     return (
-      <div>
+      <MainContainer>
         <Header />
         <div className="container">
-          <label for="regexCheckbox"> 
-            Mix words with original text 
-            <input 
-              id="regexCheckbox" 
-              type="checkbox" 
-              className='regexCheckbox' 
-              disabled={regexCheckboxInit}  
-              ref={this.regexCheckbox} 
-              onChange={this.handleRegexCheckbox} 
-            />
-          </label>
 
-          <input 
-            className="regexValue" 
-            ref={this.regexValue} 
-            onChange={this.handleRegexValueChange} 
-          />
+
+
           <div className="input-output__container">
-            <div 
+            <textarea 
             ref={this.input} 
             className="input" 
-            contentEditable>
+            style={{"font-size": this.state.textSize}}
+            onChange={this.handleInput}
+            >
 
-              KIEDY wyjdziesz w noc pogodną,
-              policz ile gwiazd na niebie,
-              Niech te GWIAZDY Ci przypomną,
-              Jak ja MOCNO kocham Ciebie KIEDY.
-              {/* Pick all uppercase words \b[A-Z]{2,}\b  */}
+              Przykładowy tekst.
 
-            </div>
-            <div> => </div>
+
+            </textarea>
+            <div> <FontAwesome name="angle-double-right" size="2x"></FontAwesome> </div>
             <Translate 
               toTranslate={text} 
-              regexValue={regexValueFinal}
-              mixWithText={regexCheckbox} 
+              fontSize={textSize}
             />
           </div>
+          <span className="yandex-span">
+          Powered by Yandex.Translate - <a href="https://translate.yandex.com/">https://translate.yandex.com</a>
+          </span>
           <button className="btn border-btn" onClick={this.handleInput}>
             Translate
           </button>
-          <div className="regexOutput" ref="regexOutput">
-            {regexValue}
-          </div>
+
         </div>
-      </div>
+      </MainContainer>
     );
   }
 }

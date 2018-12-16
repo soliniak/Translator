@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Spinner from "../spinner/spinner";
-import ShowTranslatedText from "./showTranslatedText";
 
 const errorsList = [
   ["200", "Operation completed successfully"],
@@ -18,44 +17,6 @@ const api_key =
 const translateLangDirection = "pl-en";
 let request, requestUrl;
 
-
-let validateRegex = regex => {
-  if (regex.trim() === "") {
-    console.log("No regex")
-    return false;
-  }
-  try {
-    new RegExp(regex);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
-
-let matchRegex = (textInput, regex) => {
-  const regexFromInput = new RegExp(regex, "g");
-  const found = textInput.match(regexFromInput);
-  if (found !== "") {
-console.log(found.index)
-    return found;
-  }
-  return false;
-}
-
-let validateTextToTranslate = toTranslate => {
-  if (toTranslate.trim() !== "") {
-    return toTranslate;
-  }
-}
-
-let returnRegexOrText = (toTranslate, regexValue) => {
-  if (validateRegex(regexValue)) {
-    return matchRegex(toTranslate, regexValue)
-  } else {
-    return validateTextToTranslate(toTranslate);
-  }
-}
-
 class Translate extends Component {
   constructor(props) {
     super(props);
@@ -66,32 +27,28 @@ class Translate extends Component {
     };
   }
 
-  // if (validateRegex(toRegex)) {
-  //   matchRegex(toRegex, toTranslate)
-  //   console.log("Valid regex")
-  // } else {
-  //   console.error("Invalid regex")
-  // }
+  handleLoader = status => {
+    status === "hide" ? status = false : status = true;
+    this.setState({
+      loaderDisplay: status
+    });
+  }
 
-
-  validateData = (toTranslate, regexValue) => {
+  validateData = toTranslate => {
     if (api_key && translateLangDirection && toTranslate.trim() !== "") {
-      return returnRegexOrText(toTranslate, regexValue)
+      return toTranslate;
     }
     return console.error("Invalid data. Check your API_KEY, translate direction for supported languages or text to translate (cannot be empty).");
   };
 
-
-  makeRequestURL = (toTranslate, regexValue) => {
-    this.setState({
-      loaderDisplay: true
-    });
-    let validateData = this.validateData(toTranslate, regexValue);
-    return (requestUrl = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${api_key}&text=${validateData}&lang=${translateLangDirection}`);
+  makeRequestURL = (toTranslate) => {
+    this.handleLoader("show");
+    let validateData = this.validateData(toTranslate);
+    return `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${api_key}&text=${validateData}&lang=${translateLangDirection}`;
   };
 
-  makeRequest = (toTranslate, regexValue, mixWithText) => {
-    requestUrl = this.makeRequestURL(toTranslate, regexValue);
+  makeRequest = (toTranslate) => {
+    requestUrl = this.makeRequestURL(toTranslate);
     return (request = new Request(requestUrl, {
       Accept: "*/*",
       method: "POST",
@@ -102,10 +59,8 @@ class Translate extends Component {
     }));
   };
 
-  translate = (toTranslate, regexValue, mixWithText) => {
-
-    // this.fetchData(toTranslate, regexValue);
-    request = this.makeRequest(toTranslate, regexValue);
+  translate = (toTranslate) => {
+    request = this.makeRequest(toTranslate);
     fetch(request)
       .then(response => {
         if (response.status === 200) {
@@ -119,58 +74,31 @@ class Translate extends Component {
         }
       })
       .then(response => {
-        if(mixWithText){
-          console.log(mixWithText, toTranslate, regexValue)
-          const regexFromInput = new RegExp(regexValue, "gi");
-          this.setState({
-            translate: toTranslate.replace(regexFromInput, (a, b)=>{
-              console.log(a)
-              return response.text[b]
-            }),
-            loaderDisplay: false
-          });          
-        } else {
-          this.setState({
-            translate: response.text,
-            loaderDisplay: false
-          });
-        }
+        this.setState({
+          translate: response.text,
+        });
+        this.handleLoader("hide");
       })
       .catch(error => console.error("Error:", error));
   };
 
   componentDidUpdate(props) {
-    const { toTranslate, regexValue, mixWithText } = this.props;
+    const { toTranslate } = this.props;
 
-    // console.log(toTranslate, props.toTranslate, " oraz ", regexValue, props.regexValue);
-
-    if (toTranslate !== props.toTranslate || regexValue !== props.regexValue || mixWithText !== props.mixWithText) {
-      console.log("Zmienił się tekst, regex lub checbox")
-      this.translate(toTranslate, regexValue, mixWithText);
-      return;
+    if (toTranslate !== props.toTranslate) {
+      this.translate(toTranslate);
     }
   }
 
   render() {
     return (
-      <div className="output">
+      <div className="output" style={{"font-size": this.props.fontSize}} contentEditable>
         {(this.state.loaderDisplay && <Spinner />) || (
-          <ShowTranslatedText translatedText={this.state.translate} />
+          this.state.translate
         )}
       </div>
     );
   }
-}
-
-export const TranslateRegex = (regex, textInput) => {
-  if (regex) {
-    if (validateRegex(regex)) {
-      return matchRegex(textInput, regex, false);
-    } else {
-      return "Invalid regex.";
-    }
-  } 
-    return null;
 }
 
 export default Translate;
