@@ -1,0 +1,156 @@
+@import 'variables.sass'
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+body
+  background-color: $backgroundColor
+  background-image: url('./img/gfx-left-top2.png'), url('./img/gfx-top-right.png')
+  background-size: 100px, 70px
+  background-repeat: no-repeat, no-repeat
+  background-position: left top, right 50px
+.App
+  text-align: center
+
+.container
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  width: 100%
+
+.input-output__container
+  display: flex
+  flex-direction: column
+  align-items: center
+
+
+.input__container, .output__container
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  border: 0
+  overflow: hidden
+
+.input__container
+  border-radius: 7px 7px 0 0
+  background-color: #fff
+
+
+.output__container
+  border-radius: 0 0 7px 7px
+  background-color: #fafafb
+
+
+
+.input,
+.output
+  width: 270px
+  min-height: 110px
+  height: auto
+  border: 0
+  text-align: left
+  padding: .5rem
+  font-family: Arial
+  font-size: 1rem
+  margin-bottom: .5rem
+
+.first-language, .second-language
+  width: 100%
+  height: 30px
+  background-color: pink
+  display: flex
+  align-items: center
+  padding: 0 1rem
+
+
+.fa-angle-double-right
+  transform: rotate(90deg)
+  display: flex
+  align-items: center
+  justify-content: center
+  position: absolute
+  background-color: red
+  border-radius: 50%
+  /* padding: 1rem */
+  height: 50px
+  width: 50px
+
+
+.btn
+  height: $btnSize
+  width: $btnSize
+  cursor: pointer
+  transition: all 0.2s ease
+  margin: 1rem 0
+  color: #ffffff
+  background-image: linear-gradient(to right, $gradientStart, $gradientEnd)
+  border-radius: 50%
+  border: none
+
+.btn:hover
+  box-shadow: 0 1px 4px 0px #66666663
+
+
+
+.regexInput
+  padding: 0.5rem 1rem
+  margin-bottom: 2rem
+
+
+.regexOutput
+  border: 1px solid red
+  height: 200px
+  width: 400px
+
+
+.regexCheckbox
+  height: 10px
+  width: 10px
+  border: 1px solid green
+
+
+a:link, a:visited, a:active
+  color: $primeOrange
+  text-decoration: none
+
+
+.yandex-span
+  padding: .5rem
+  align-self: center
+  text-align: center
+  font-size: .7rem
+
+
+// @media (max-width: 1100px
+//   .input-output__container
+//     flex-direction: column
+  
+//   .yandex-span
+//     align-self: center
+//     margin-right: 0
+  
+//   .fa-angle-double-right
+//     transform: rotate(90deg)
+  
+
+
+// @media (max-width: 500px
+//   .input, .output
+//     width: 400px
+  
+
+
+// @media (max-width: 420px
+//   .input, .output
+//     width: 300px
+  
+
+
+
+/*  background-color: #f5f5f7 */
+/* btn gradient from #18d5fd to #2065f0 */
+/* link color #ffa015 */

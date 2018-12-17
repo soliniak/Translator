@@ -93,6 +93,7 @@ class Translate extends Component {
   render() {
     return (
       <div className="output" style={{"font-size": this.props.fontSize}} contentEditable>
+
         {(this.state.loaderDisplay && <Spinner />) || (
           this.state.translate
         )}
