@@ -8,6 +8,7 @@ class InitLangs extends Component {
         this.state = {
             language: this.props.defaultLang
         };
+
     }
 
 
@@ -23,15 +24,18 @@ class InitLangs extends Component {
         })        
         this.props.language(e.target.value);          
     }
-
+    
     render() {
+        let rows = [];
+
+        for (let [value, key] of Object.entries(languages)) {
+            rows.push(<option key={key} value={value}> { value } </option>)
+        }
+
+
         return (
             <select value={this.state.language} className="select-test" onChange={this.handleLangChange}>
-                {Object.keys(languages).map((value, key) => (
-                    <option key={key} value={value}>
-                        {value}
-                    </option>
-                ))}
+                {rows}
             </select>
         )
     }
