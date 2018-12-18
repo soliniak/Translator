@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Translate from "./components/translate/translate";
 import Header from "./components/header/header"
+import ChooseLanguage from "./components/languages/chooseLanguages"
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons'
@@ -55,13 +56,12 @@ class Container extends Component {
 
           <div className="input-output__container">
           <div className="input__container">
-            <div className="first-language">
-            POLSKI
-            </div>
+          <ChooseLanguage language="polish" />
+
             <textarea 
             ref={this.input} 
             className="input" 
-            style={{"font-size": this.state.textSize}}
+            style={{"fontSize": this.state.textSize}}
             onChange={this.handleInput}
             >
 
@@ -71,10 +71,8 @@ class Container extends Component {
             </textarea>
             </div>
             {/* <div> <FontAwesome name="angle-double-right" size="2x"></FontAwesome> </div> */}
-          <div className="output__container">
-            <div className="second-language">
-            ENGLISH
-            </div>
+            <div className="output__container">
+            <ChooseLanguage language="english" />
             <Translate 
               toTranslate={text} 
               fontSize={textSize}
