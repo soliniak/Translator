@@ -24,7 +24,9 @@ class Container extends Component {
     super();
     this.state = {
       text: "",
-      textSize: ""
+      textSize: "",
+      translateFrom: "polish",
+      translateTo: "english"
     };
     this.input = React.createRef();
 
@@ -44,6 +46,17 @@ class Container extends Component {
 
   };
 
+
+  handleFrom = (language) => {
+    console.log("From: " + language)
+    return language
+  }
+
+  handleTo = (language) => {
+    console.log("To: " + language)
+    return language
+  }
+
   render() {
     const { text, textSize } = this.state;
 
@@ -52,11 +65,9 @@ class Container extends Component {
         <Header />
         <div className="container">
 
-
-
           <div className="input-output__container">
           <div className="input__container">
-          <ChooseLanguage language="polish" />
+          <ChooseLanguage language={this.handleFrom} defaultLang="polish" />
 
             <textarea 
             ref={this.input} 
@@ -72,10 +83,12 @@ class Container extends Component {
             </div>
             {/* <div> <FontAwesome name="angle-double-right" size="2x"></FontAwesome> </div> */}
             <div className="output__container">
-            <ChooseLanguage language="english" />
+            <ChooseLanguage language={this.handleTo} defaultLang="english" />
             <Translate 
               toTranslate={text} 
               fontSize={textSize}
+              translateFrom={this.state.translateFrom}
+              translateTo={this.state.translateTo}
             />
             </div>
           </div>

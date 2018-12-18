@@ -6,7 +6,7 @@ class InitLangs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            language: this.props.language
+            language: this.props.defaultLang
         };
     }
 
@@ -15,11 +15,13 @@ class InitLangs extends Component {
     componentDidUpdate() {
         console.log(this.state.language)
     }
+
     
     handleLangChange = (e) => {
         this.setState({
             language: e.target.value
-        })
+        })        
+        this.props.language(e.target.value);          
     }
 
     render() {
@@ -36,18 +38,10 @@ class InitLangs extends Component {
 }
 
 class ChooseLanguage extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-          langKey: this.props.language,
-          language: ""
-      };
-    }
-
     render() {
         return (
             <div className="first-language">                
-                    <InitLangs language={this.props.language} />
+                    <InitLangs language={this.props.language} defaultLang={this.props.defaultLang} />
             </div>
         )
     }
