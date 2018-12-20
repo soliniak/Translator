@@ -1,28 +1,44 @@
 import React, { Component } from "react";
 import { languages } from "./supportedLanguages.js"
 
+export const keyFromLanguage = language => {
+    for (let [value, key] of Object.entries(languages)) {
+        if(value === language) {             
+            return key;
+        }
+    }
+}
 
-class InitLangs extends Component {
+class ChooseLanguage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            language: this.props.defaultLang
+            language: "",
+            langKey: ""
         };
 
     }
 
-
-
-    componentDidUpdate() {
-        console.log(this.state.language)
+    componentDidMount(){
+        this.setState({
+            language: this.props.defaultLang,
+            langKey: keyFromLanguage(this.props.defaultLang)      
+        })
     }
 
-    
+
+    componentDidUpdate(prevState, prevProps) {
+        console.log("PrevProps: ", prevProps, " \n ActualState: language: ", this.state.language, "langKey: ", this.state.langKey)
+
+    }
+
     handleLangChange = (e) => {
         this.setState({
-            language: e.target.value
-        })        
-        this.props.language(e.target.value);          
+            language: e.target.value,
+            langKey: keyFromLanguage(e.target.value)
+        })
+        this.props.language(e.target.value);
+
     }
     
     render() {
@@ -32,26 +48,17 @@ class InitLangs extends Component {
             rows.push(<option key={key} value={value}> { value } </option>)
         }
 
-
-        return (
-            <select value={this.state.language} className="select-test" onChange={this.handleLangChange}>
-                {rows}
-            </select>
-        )
-    }
-}
-
-class ChooseLanguage extends Component {
-    render() {
         return (
             <div className="first-language">                
-                    <InitLangs language={this.props.language} defaultLang={this.props.defaultLang} />
+                <select value={this.state.language} className="select-test" onChange={this.handleLangChange}>
+                    {rows}
+                </select>
             </div>
         )
     }
-
-
 }
+
+
 
 
 export default ChooseLanguage;
