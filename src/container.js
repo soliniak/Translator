@@ -67,6 +67,7 @@ class Container extends Component {
 			<div className="container">
 			<div className="input-output__container">
 				<div className="input__container">
+				<div className="flag"> Flag </div>
 				<ChooseLanguage language={this.handleTranslateFrom} defaultLang="polish" />
 				<textarea 
 					ref={this.input} 
