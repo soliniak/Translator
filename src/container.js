@@ -99,11 +99,6 @@ class Container extends Component {
 						/>
 					</div>
 				</div>
-			<p className="yandex-span">
-				<span>
-				Powered by Yandex.Translate <a href="https://translate.yandex.com/">https://translate.yandex.com</a>
-				</span>
-			</p>
 			<button className="btn border-btn" onClick={this.handleInput}>
 				<FontAwesomeIcon icon={faExchangeAlt} size="2x" />
 			</button>

@@ -25,8 +25,9 @@ body
   display: flex
   flex-direction: column
   align-items: center
-
-
+  box-shadow: 0 8px 15px 0 rgba(100, 100, 100, .1)
+  border-radius: 7px
+  
 .input__container, .output__container
   display: flex
   align-items: center
@@ -43,8 +44,6 @@ body
 .output__container
   border-radius: 0 0 7px 7px
   background-color: #fafafb
-
-
 
 .input,
 .output
@@ -78,39 +77,21 @@ body
   height: 50px
   width: 50px
 
-
 .btn
   height: $btnSize
   width: $btnSize
   cursor: pointer
   transition: all 0.2s ease
-  margin: 1rem 0
+  margin: 2rem 0
   color: #ffffff
   background-image: linear-gradient(to right, $gradientStart, $gradientEnd)
   border-radius: 50%
   border: none
+  box-shadow: 0 8px 15px 0 rgba(100, 100, 200, .1)
+
 
 .btn:hover
   box-shadow: 0 1px 4px 0px #66666663
-
-
-
-.regexInput
-  padding: 0.5rem 1rem
-  margin-bottom: 2rem
-
-
-.regexOutput
-  border: 1px solid red
-  height: 200px
-  width: 400px
-
-
-.regexCheckbox
-  height: 10px
-  width: 10px
-  border: 1px solid green
-
 
 a:link, a:visited, a:active
   color: $primeOrange
@@ -138,18 +119,18 @@ a:link, a:visited, a:active
   display: flex
   align-items: center
   justify-content: center
-  // margin-right: .5rem
   background-color: $btnBgColor
-  // border-radius: 50%
-  // overflow: hidden
 
-.select-test
-  width: 80px
+.active-language
+  width: auto
+  height: 27px
   border: none
   background-color: $btnBgColor
   padding: 5px 0
   font-weight: bold
   text-transform: capitalize
+  font-size: 12px
+  line-height: 14px
 
 // @media (max-width: 1100px
 //   .input-output__container

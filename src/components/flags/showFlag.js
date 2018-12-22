@@ -25,7 +25,6 @@ class ShowFlag extends Component {
 
             fetch(url)
             .then((response) => {
-                  console.log(response.type)
                   if(response.ok){
                         if(flagID !== this.state.flagID){
                               this.setState({ 
@@ -34,12 +33,9 @@ class ShowFlag extends Component {
                         this.handleLoader("hide");
                         }
                   } else {
-                        if(flagID !== this.state.flagID){
-                              this.setState({ 
-                                    flagID: "no-flag"
-                              });
-                              return
-                        }
+                        throw new Error(
+                              `Can't get flag for ${flagID} - ${response.status}`
+                        );
                   }
             })
             .catch(error => console.error(error))
@@ -56,8 +52,7 @@ class ShowFlag extends Component {
             return (
                   <div className="flag__container">
                         {(this.state.loaderDisplay && <Spinner />) || (
-                              
-                                    <img src={require(`./../../img/flags/${this.state.flagID}.png`)} alt={this.props.flagID} className="flag" />
+                              <img src={require(`./../../img/flags/${this.state.flagID}.png`)} alt={this.props.flagID} className="flag" />
                         )}
                   </div>
             );
