@@ -24,7 +24,10 @@ class Container extends Component {
 		text: "",
 		textSize: "",
 		translateFrom: "pl",
-		translateTo: "en"
+		translateTo: "en",
+		flagIDFrom: "pl",
+		flagIDTo: "en",
+
     };
     this.input = React.createRef();
   }
@@ -45,16 +48,18 @@ class Container extends Component {
 
   
 	handleTranslateFrom = language => {
-		// console.log("From: " + language, keyFromLanguage(language))
+		console.log("From: " + language, keyFromLanguage(language))
 		this.setState({
-			translateFrom: keyFromLanguage(language)
+			translateFrom: keyFromLanguage(language),
+			flagIDFrom: keyFromLanguage(language)
 		}) 
 	}
 
 	handleTranslateTo = language => {
 		// console.log("To: " + language, keyFromLanguage(language))
 		this.setState({
-			translateTo: keyFromLanguage(language)
+			translateTo: keyFromLanguage(language),
+			flagIDTo: keyFromLanguage(language)
 		})
 	}
  
@@ -65,33 +70,35 @@ class Container extends Component {
 		<MainContainer>
 			<Header />
 			<div className="container">
-			<div className="input-output__container">
-				<div className="input__container">
-				<div className="flag"> Flag </div>
-				<ChooseLanguage language={this.handleTranslateFrom} defaultLang="polish" />
-				<textarea 
-					ref={this.input} 
-					className="input" 
-					style={{"fontSize": this.state.textSize}}
-					onChange={this.handleInput}
-				>
-					Przykładowy tekst.
-				</textarea>
+				<div className="input-output__container">
+					<div className="input__container">
+						<ChooseLanguage 
+							language={this.handleTranslateFrom} 
+							defaultLang="polish" />
+						<textarea 
+							ref={this.input} 
+							className="input" 
+							style={{"fontSize": this.state.textSize}}
+							onChange={this.handleInput}
+						>
+							Przykładowy tekst.
+						</textarea>
+					</div>
+					{/* <div> <FontAwesome name="angle-double-right" size="2x"></FontAwesome> </div> */}
+					<div className="output__container">
+						{/* <ShowFlag flagID={this.state.flagIDTo}/> */}
+						<ChooseLanguage 
+							language={this.handleTranslateTo} 
+							defaultLang="english" 
+						/>
+						<Translate 
+							toTranslate={text} 
+							fontSize={textSize}
+							translateFrom={this.state.translateFrom}
+							translateTo={this.state.translateTo}
+						/>
+					</div>
 				</div>
-				{/* <div> <FontAwesome name="angle-double-right" size="2x"></FontAwesome> </div> */}
-				<div className="output__container">
-				<ChooseLanguage 
-					language={this.handleTranslateTo} 
-					defaultLang="english" 
-				/>
-				<Translate 
-					toTranslate={text} 
-					fontSize={textSize}
-					translateFrom={this.state.translateFrom}
-					translateTo={this.state.translateTo}
-				/>
-				</div>
-			</div>
 			<p className="yandex-span">
 				<span>
 				Powered by Yandex.Translate <a href="https://translate.yandex.com/">https://translate.yandex.com</a>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { languages } from "./supportedLanguages.js"
+import ShowFlag from "./../flags/showFlag";
 
 export const keyFromLanguage = language => {
     for (let [value, key] of Object.entries(languages)) {
@@ -13,8 +14,8 @@ class ChooseLanguage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            language: "",
-            langKey: ""
+            language: "polish",
+            langKey: "pl"
         };
 
     }
@@ -27,10 +28,10 @@ class ChooseLanguage extends Component {
     }
 
 
-    componentDidUpdate(prevState, prevProps) {
-        console.log("PrevProps: ", prevProps, " \n ActualState: language: ", this.state.language, "langKey: ", this.state.langKey)
+    // componentDidUpdate(prevState, prevProps) {
+    //     console.log("PrevProps: ", prevProps, " \n ActualState: language: ", this.state.language, "langKey: ", this.state.langKey)
 
-    }
+    // }
 
     handleLangChange = (e) => {
         this.setState({
@@ -48,8 +49,20 @@ class ChooseLanguage extends Component {
             rows.push(<option key={key} value={value}> { value } </option>)
         }
 
+        rows.sort((a, b)=>{
+            if(a.props.value < b.props.value) {
+                return -1;
+            }
+            if(a.props.value > b.props.value) {
+                return 1;
+            }
+            return 0;
+         })
+        
+
         return (
-            <div className="first-language">                
+            <div className="first-language">
+                <ShowFlag flagID={this.state.langKey}/>
                 <select value={this.state.language} className="select-test" onChange={this.handleLangChange}>
                     {rows}
                 </select>
