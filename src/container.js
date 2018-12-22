@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import Translate from "./components/translate/translate";
 import Header from "./components/header/header";
 import ChooseLanguage, { keyFromLanguage } from "./components/languages/chooseLanguages";
+import Welcome from "./components/welcome-screen/welcome"
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
 const wait = 340; // 0.34s
 let delaySetState;
@@ -32,23 +34,19 @@ class Container extends Component {
     this.input = React.createRef();
   }
   
- 	handleInput = () => {
-
-    clearTimeout(delaySetState);
-    
-    delaySetState = setTimeout(()=>{
-		if (this.state.text !== this.input.current.value) {
-			this.setState({
-				text: this.input.current.value
-			});
-		}
-	}, wait)
-	
+	handleInput = () => {
+    		clearTimeout(delaySetState);
+    		delaySetState = setTimeout(()=>{
+			if (this.state.text !== this.input.current.value) {
+				this.setState({
+					text: this.input.current.value
+				});
+			}
+		}, wait)	
 	};
-
   
 	handleTranslateFrom = language => {
-		console.log("From: " + language, keyFromLanguage(language))
+		// console.log("From: " + language, keyFromLanguage(language))
 		this.setState({
 			translateFrom: keyFromLanguage(language),
 			flagIDFrom: keyFromLanguage(language)
@@ -63,11 +61,23 @@ class Container extends Component {
 		})
 	}
  
+	handleButtonClick = (e) => {
+
+		this.handleInput();
+		const btn = e.target
+		btn.classList.add("btn-clicked");
+	
+		setTimeout(() => {
+			btn.classList.remove("btn-clicked");
+		}, 400)
+	}
+	
 	render() {
 		const { text, textSize } = this.state;
 
 		return (
 		<MainContainer>
+			<Welcome />
 			<Header />
 			<div className="container">
 				<div className="input-output__container">
@@ -84,9 +94,10 @@ class Container extends Component {
 							Przykładowy tekst.
 						</textarea>
 					</div>
-					{/* <div> <FontAwesome name="angle-double-right" size="2x"></FontAwesome> </div> */}
+					<div>
+					<FontAwesomeIcon icon={faAngleDoubleRight} size="2x" className="middle"></FontAwesomeIcon>
+					</div>
 					<div className="output__container">
-						{/* <ShowFlag flagID={this.state.flagIDTo}/> */}
 						<ChooseLanguage 
 							language={this.handleTranslateTo} 
 							defaultLang="english" 
@@ -99,8 +110,8 @@ class Container extends Component {
 						/>
 					</div>
 				</div>
-			<button className="btn border-btn" onClick={this.handleInput}>
-				<FontAwesomeIcon icon={faExchangeAlt} size="2x" />
+			<button className="btn" id="btn" onClick={this.handleButtonClick}>
+				<FontAwesomeIcon style={{pointerEvents: "none"}} icon={faExchangeAlt} size="2x" />
 			</button>
 			</div>
 		</MainContainer>

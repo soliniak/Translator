@@ -21,7 +21,6 @@ class Translate extends Component {
 		super(props);
 		this.state = {
 			translate: "",
-			error: "",
 			loaderDisplay: false
 		};
 	}
@@ -34,7 +33,10 @@ class Translate extends Component {
 	}
 
 	validateData = (toTranslate, translateLangDirection) => {
-		if (api_key && translateLangDirection && toTranslate.trim() !== "") {
+		if(toTranslate.trim() === ""){
+			return;
+		}
+		if (api_key && translateLangDirection && toTranslate) {
 			return toTranslate;
 		}
 		return console.error("Invalid data. Check your API_KEY, translate direction for supported languages or text to translate (cannot be empty).");
@@ -43,7 +45,6 @@ class Translate extends Component {
 	makeRequestURL = (toTranslate, translateFrom, translateTo) => {
 		this.handleLoader("show");
 		let translateLangDirection = translateFrom +"-"+ translateTo;
-
 		let validateData = this.validateData(toTranslate, translateLangDirection);
 		return `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${api_key}&text=${validateData}&lang=${translateLangDirection}`;
 	};
@@ -65,20 +66,18 @@ class Translate extends Component {
 
 	fetch(request)
 		.then(response => {
-		if (response.status === 200) {
-			return response.json();
-		} else {
-			throw new Error(
-				`Something went wrong on API server! Error code: ${
-				response.status
-				} - ${errors.get(response.status.toString())}`
-			);
-		}
+			if (response.status === 200) {
+				return response.json();
+			} else {
+				throw new Error(
+					`Something went wrong on API server! Error code: ${response.status} - ${errors.get(response.status.toString())}`
+				);
+			}
 		})
 		.then(response => {
 			this.setState({
 				translate: response.text,
-			});
+			});				
 			this.handleLoader("hide");
 		})
 		.catch(error => console.error("Error:", error));
@@ -86,19 +85,25 @@ class Translate extends Component {
 
 	componentDidUpdate(props) {
 		const { toTranslate, translateFrom, translateTo } = this.props;
-		// console.log("UPDATE: ", translateFrom, translateTo)
+
 		if (toTranslate !== props.toTranslate || translateFrom !== props.translateFrom || translateTo !== props.translateTo) {
-			this.translate(toTranslate, translateFrom, translateTo);
-		}
+			if(toTranslate.trim() !== "") {
+				this.translate(toTranslate, translateFrom, translateTo);
+			} else {
+				this.setState({
+					translate: ""
+				});	
+			}
+		}		
 	}
 
 	render() {
 		return (
 			<div className="output" style={{"fontSize": this.props.fontSize}} contentEditable>
-
-			{(this.state.loaderDisplay && <Spinner />) || (
-				this.state.translate
-			)}
+				{
+					(this.state.loaderDisplay && <Spinner />) 
+					|| (this.state.translate) 
+				}			
 			</div>
 		);
 	}

@@ -27,6 +27,10 @@ body
   align-items: center
   box-shadow: 0 8px 15px 0 rgba(100, 100, 100, .1)
   border-radius: 7px
+  width: 95%
+  max-width: 900px
+  overflow: hidden
+  position: relative
   
 .input__container, .output__container
   display: flex
@@ -35,19 +39,20 @@ body
   flex-direction: column
   border: 0
   overflow: hidden
+  width: 100%
 
 .input__container
   border-radius: 7px 7px 0 0
   background-color: #fff
-
-
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, .01)
+  z-index: 100
 .output__container
   border-radius: 0 0 7px 7px
   background-color: #fafafb
 
 .input,
 .output
-  width: 270px
+  width: 100%
   min-height: 110px
   height: auto
   border: 0
@@ -64,19 +69,6 @@ body
   align-items: flex-start
   padding: 10px
 
-
-.fa-angle-double-right
-  transform: rotate(90deg)
-  display: flex
-  align-items: center
-  justify-content: center
-  position: absolute
-  background-color: red
-  border-radius: 50%
-  /* padding: 1rem */
-  height: 50px
-  width: 50px
-
 .btn
   height: $btnSize
   width: $btnSize
@@ -87,12 +79,21 @@ body
   background-image: linear-gradient(to right, $gradientStart, $gradientEnd)
   border-radius: 50%
   border: none
-  box-shadow: 0 8px 15px 0 rgba(100, 100, 200, .1)
-
+  box-shadow: 0 3px 4px 0px #66666663
 
 .btn:hover
+  transform: translateY(1px)
   box-shadow: 0 1px 4px 0px #66666663
 
+.btn-clicked
+  animation: BtnClicked .4s ease forwards
+
+@keyframes BtnClicked
+  0%
+    box-shadow: 0 1px 4px 0px rgba(100, 100, 150, .2)
+  100%
+    box-shadow: 0 1px 4px 30px rgba(100, 100, 150, 0)
+  
 a:link, a:visited, a:active
   color: $primeOrange
   text-decoration: none
@@ -106,58 +107,49 @@ a:link, a:visited, a:active
 
 .flag
   height: 20px
-  width: auto
-  // position: absolute
-  border-radius: 50%
-  margin-left: 5px
-  margin-right: 2px
+  width: 40px
 
 .flag__container
   position: relative
   height: 27px
-  width: 50px
+  width: 30px
   display: flex
   align-items: center
   justify-content: center
-  background-color: $btnBgColor
+  background-color: $backgroundColor
+
+.flag__overflow
+  position: relative
+  height: 20px
+  width: 20px
+  border-radius: 50%
+  overflow: hidden
+  display: flex
+  align-items: center
+  justify-content: center
 
 .active-language
   width: auto
   height: 27px
   border: none
-  background-color: $btnBgColor
+  background-color: $backgroundColor
   padding: 5px 0
   font-weight: bold
   text-transform: capitalize
   font-size: 12px
   line-height: 14px
 
-// @media (max-width: 1100px
-//   .input-output__container
-//     flex-direction: column
+.middle
+  position: absolute
+  left: 50%
+  top: 50%
+  z-index: 201
+  color: $arrowColor
+  box-shadow: 5px 0 0 0 $shadowColor
+  height: 50px
+  width: 50px !important
+  background-color: #ffffff
+  border-radius: 50%
+  transform: translate(-50%, -50%) rotate(90deg)
+  padding: 10px
   
-//   .yandex-span
-//     align-self: center
-//     margin-right: 0
-  
-//   .fa-angle-double-right
-//     transform: rotate(90deg)
-  
-
-
-// @media (max-width: 500px
-//   .input, .output
-//     width: 400px
-  
-
-
-// @media (max-width: 420px
-//   .input, .output
-//     width: 300px
-  
-
-
-
-/*  background-color: #f5f5f7 */
-/* btn gradient from #18d5fd to #2065f0 */
-/* link color #ffa015 */

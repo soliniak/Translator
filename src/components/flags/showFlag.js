@@ -51,9 +51,11 @@ class ShowFlag extends Component {
       render() {
             return (
                   <div className="flag__container">
-                        {(this.state.loaderDisplay && <Spinner />) || (
-                              <img src={require(`./../../img/flags/${this.state.flagID}.png`)} alt={this.props.flagID} className="flag" />
-                        )}
+                        <div className="flag__overflow">
+                              {(this.state.loaderDisplay && <Spinner />) || (
+                                    <img src={require(`./../../img/flags/${this.state.flagID}.png`)} alt={this.props.flagID} className="flag" />
+                              )}
+                        </div>
                   </div>
             );
       }
