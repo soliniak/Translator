@@ -86,7 +86,7 @@ class Translate extends Component {
 
 	componentDidUpdate(props) {
 		const { toTranslate, translateFrom, translateTo } = this.props;
-		console.log("UPDATE: ", translateFrom, translateTo)
+		// console.log("UPDATE: ", translateFrom, translateTo)
 		if (toTranslate !== props.toTranslate || translateFrom !== props.translateFrom || translateTo !== props.translateTo) {
 			this.translate(toTranslate, translateFrom, translateTo);
 		}

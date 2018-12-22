@@ -2,10 +2,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 0;
+  font-family: Calibri;
+  padding: 3rem 0;
   height: 94px;
   width: 100%;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: #000;
 }
 
