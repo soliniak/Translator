@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
+
 const wait = 340; // 0.34s
 let delaySetState;
 
@@ -18,6 +19,8 @@ const MainContainer = styled.div`
 	justify-content: center;
 	flex-direction: column;
 `;
+
+
 
 class Container extends Component {
   constructor(props) {

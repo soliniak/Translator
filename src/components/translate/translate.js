@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import Spinner from "../spinner/spinner";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import ClipboardsJS from "clipboard/dist/clipboard.min"
+
+new ClipboardsJS("#btn-clipboard")
 
 const errorsList = [
 	["200", "Operation completed successfully"],
@@ -97,14 +102,31 @@ class Translate extends Component {
 		}		
 	}
 
+	handleCopyToClipboard = (e) => {
+
+		const btn = e.target
+		btn.classList.add("btn-copied");
+		btn.firstChild.classList.add("icon-ok")
+
+		setTimeout(() => {
+			btn.classList.remove("btn-copied");
+			btn.firstChild.classList.remove("icon-ok")
+		}, 400)
+	}
+	
 	render() {
 		return (
-			<div className="output" style={{"fontSize": this.props.fontSize}} contentEditable>
-				{
-					(this.state.loaderDisplay && <Spinner />) 
-					|| (this.state.translate) 
-				}			
-			</div>
+			<React.Fragment>
+				<div className="output" id="foo" style={{"fontSize": this.props.fontSize}}>
+					{
+						(this.state.loaderDisplay && <Spinner />) 
+						|| (this.state.translate) 
+					}
+				</div>
+				<button id="btn-clipboard" title="Copy to clipboard." data-clipboard-target="#foo" className="copy-clipboard" onClick={this.handleCopyToClipboard} disabled={!this.state.translate}>
+					<FontAwesomeIcon icon={faCopy} style={{pointerEvents: "none"}} />
+				</button>		
+			</React.Fragment>
 		);
 	}
 }

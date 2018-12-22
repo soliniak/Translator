@@ -11,6 +11,11 @@ body
   background-size: 100px, 70px
   background-repeat: no-repeat, no-repeat
   background-position: left top, right 50px
+
+button
+  cursor: pointer
+  &:disabled
+    cursor: default
 .App
   text-align: center
 
@@ -72,7 +77,6 @@ body
 .btn
   height: $btnSize
   width: $btnSize
-  cursor: pointer
   transition: all 0.2s ease
   margin: 2rem 0
   color: #ffffff
@@ -94,6 +98,13 @@ body
   100%
     box-shadow: 0 1px 4px 30px rgba(100, 100, 150, 0)
   
+
+.btn-copied
+  @extend .btn-clicked
+
+.icon-ok
+  color: #2AB812
+
 a:link, a:visited, a:active
   color: $primeOrange
   text-decoration: none
@@ -144,7 +155,7 @@ a:link, a:visited, a:active
   left: 50%
   top: 50%
   z-index: 201
-  color: $arrowColor
+  color: $btnTextColor
   box-shadow: 5px 0 0 0 $shadowColor
   height: 50px
   width: 50px !important
@@ -153,3 +164,24 @@ a:link, a:visited, a:active
   transform: translate(-50%, -50%) rotate(90deg)
   padding: 10px
   
+@media(max-width: 400px)
+  .middle
+    display: none
+
+
+.copy-clipboard
+  height: 30px
+  width: 30px
+  line-height: 20px
+  background-color: #ffffff
+  right: 0
+  bottom: 0
+  margin: 0 10px 10px 0
+  border: 0
+  color: $btnTextColor
+  border-radius: 50%
+  box-shadow: 0 5px 0 0 $shadowColor
+  display: flex
+  align-items: center
+  justify-content: center
+  position: absolute
