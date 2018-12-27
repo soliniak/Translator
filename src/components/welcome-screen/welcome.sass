@@ -11,9 +11,9 @@
       justify-content: center
       flex-direction: row
       overflow: hidden
+      pointer-events: none
       z-index: 300
       opacity: 1
-      animation: Welcome 5s 2s ease forwards
       .dude, .lady
             height: 100%
             width: 50%
@@ -33,14 +33,6 @@
             animation: slideRight 5s .4s ease forwards
             img
                   transform: translateY(-50px)
-
-@keyframes Welcome
-      0%
-      10%
-            pointer-events: none
-      100%
-            pointer-events: none
-
 
 @keyframes slideLeft
       0%
