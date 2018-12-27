@@ -63,9 +63,11 @@ class ChooseLanguage extends Component {
         return (
             <div className="first-language">
                 <ShowFlag flagID={this.state.langKey}/>
-                <select value={this.state.language} className="active-language" onChange={this.handleLangChange}>
-                    {rows}
-                </select>
+                    <div className="select__language">
+                        <select value={this.state.language} className="active-language" onChange={this.handleLangChange}>
+                            {rows}
+                        </select>
+                    </div>
             </div>
         )
     }

@@ -94,7 +94,6 @@ class Container extends Component {
 							style={{"fontSize": this.state.textSize}}
 							onChange={this.handleInput}
 						>
-							Przykładowy tekst.
 						</textarea>
 					</div>
 					<div>
