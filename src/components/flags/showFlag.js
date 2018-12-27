@@ -21,7 +21,7 @@ class ShowFlag extends Component {
       getFlag = () => {
 		this.handleLoader("show");
             const { flagID } = this.props;
-            const url = `./img/flags/${flagID}`;
+            const url = `./flags/${flagID}.png`;
 
             fetch(url)
             .then((response) => {
@@ -53,7 +53,7 @@ class ShowFlag extends Component {
                   <div className="flag__container">
                         <div className="flag__overflow">
                               {(this.state.loaderDisplay && <Spinner />) || (
-                                    <img src={require(`./../../img/flags/${this.state.flagID}.png`)} alt={this.props.flagID} className="flag" />
+                                    <img src={require(`./flags/${this.state.flagID}.png`)} alt={this.props.flagID} className="flag" />
                               )}
                         </div>
                   </div>

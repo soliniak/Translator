@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./welcome.sass"
-import dudeImg from "./../../img/gfx-loader-man.png"
-import ladyImg from "./../../img/gfx-loader-woman.png"
+import dudeImg from "./img/gfx-loader-man.png"
+import ladyImg from "./img/gfx-loader-woman.png"
 
 
 class Welcome extends Component {
